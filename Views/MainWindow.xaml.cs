@@ -1,5 +1,10 @@
-﻿using ContactBook.DAL;
+﻿using ContactBook.Commands;
+using ContactBook.DAL;
 using ContactBook.Models;
+using ContactBook.ViewModels;
+using ContactBook.Views.Components;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,24 +24,73 @@ namespace ContactBook
     public partial class MainWindow : Window
     {
         DBRepository _dB;
+       
 
         public MainWindow()
         {
             InitializeComponent();
-            _dB = new DBRepository();
+            DataContext = new MainViewModel();
+            
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
-            //var tuple = DBRepository.SwapTupleItems(1, "string");
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
 
-            var name = "FirstName";
-            name = _dB.ToSQLFormat(name);
+        }
 
-            var contact = await _dB.SelectEntityAsync<Contact>(1);
+        private void MinimizeWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                WindowState = WindowState.Minimized;
+            }
+                
+        }
+
+        private void CloseWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.Close();
+        }
+
+        private void ChangeWindowSize(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (WindowState != WindowState.Maximized)
+                    WindowState = WindowState.Maximized;
+                else
+                    WindowState = WindowState.Normal;
+            }
+                
+        }
+
+        private void HasSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+                BorderThickness = new Thickness(6);
+            else
+                BorderThickness = new Thickness(0);
+        }
 
 
-            contact = await _dB.SelectEntityAsync<Contact>(2);
+        private void InitiateWindowResize(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount >= 2)
+            {
+                ChangeWindowSize(sender, e);
+            }
+        }
+
+        private void InitiateSearch(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                //Code for searching. Call MainViewModel
+                e.Handled = true;
+            }
         }
     }
 }

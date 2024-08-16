@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="ContactBook.Views.SelectedContactView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContactBook.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="450"
+             xmlns:vm="clr-namespace:ContactBook.ViewModels"
+             xmlns:components="clr-namespace:ContactBook.Views.Components"
+             d:DataContext="{d:DesignInstance vm:SelectedContactViewModel}">
+    <Grid Background="#FFD28383">
+            
+    </Grid>
+</UserControl>

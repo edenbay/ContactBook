@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="ContactBook.Views.ContactListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContactBook.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:vm="clr-namespace:ContactBook.ViewModels"
+            xmlns:components="clr-namespace:ContactBook.Views.Components"
+            d:DataContext="{d:DesignInstance vm:ContactListViewModel}"
+             BorderThickness="0"
+             BorderBrush="{x:Null}">
+    <Grid Background="{DynamicResource Surface Container Low}">
+        <ListView ItemsSource="{Binding Contacts}" Background="{x:Null}"
+                  PreviewMouseLeftButtonUp="ItemClick" BorderBrush="{x:Null}">
+            <ListView.Resources>
+                <ControlTemplate x:Key="SelectedTemplate"  TargetType="ListViewItem">
+                    <Border
+                    Margin="5,1"
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    BorderThickness="1" 
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="5" x:Name="border">
+                        <ContentControl Content="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource Surface Container High}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource Outline Variation}"/>
+                            <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource Surface Container High}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource Outline Variation}"/>
+                            <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                       
+
+                    </Style.Triggers>
+                </Style>
+
+               
+            </ListView.Resources>
+        </ListView>
+    </Grid>
+</UserControl>
+
+<!--<Trigger Property="IsSelected" Value="True">
+    <Setter Property="Background" Value="#242424"/>
+    <Setter Property="BorderBrush" Value="#2D2D2D"/>
+    <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
+</Trigger>
+<Trigger Property="IsMouseOver" Value="True">
+    <Setter Property="Background" Value="#242424"/>
+    <Setter Property="BorderBrush" Value="#2D2D2D"/>
+    <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
+</Trigger>
+
+<MultiTrigger>
+    <MultiTrigger.Conditions>
+        <Condition Property="IsSelected" Value="False"/>
+        <Condition Property="IsMouseOver" Value="False"/>
+    </MultiTrigger.Conditions>
+    <MultiTrigger.Setters>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
+    </MultiTrigger.Setters>
+</MultiTrigger>-->

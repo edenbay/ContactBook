@@ -1,195 +1,113 @@
 ﻿using ContactBook.Models;
+using ContactBook.Models.Base;
+using ContactBook.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Data.Common;
+using System.Data;
 using System.Dynamic;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Windows;
 namespace ContactBook.DAL
 {
     internal class DBRepository
     {
-        private readonly string _connectionString;
+        private SqlDataAccess _sql;
        
         public DBRepository()
         {
-            var config = new ConfigurationBuilder()
-                                 .AddUserSecrets<DBRepository>()
-                                 .Build();
-            _connectionString = config.GetConnectionString("DefaultConnection");
+           _sql = new SqlDataAccess();
         }
 
-
-        /// <summary>
-        /// Opens an asynchronous connection using the global connection string.
-        /// </summary>
-        /// <returns></returns>
-        private async Task<NpgsqlConnection> GetConnectionAsync()
+        public async Task<List<FullContactViewModel>> GetContactsAsync()
         {
-            var dataSourceBuilder = new NpgsqlDataSourceBuilder(_connectionString);
-            var dataSource = dataSourceBuilder.Build();
+            var fullContacts = new List<FullContactViewModel>();
 
-            return await dataSource.OpenConnectionAsync();
-        }
+            var contacts = await _sql.SelectDataAsync<Contact, Contact>("SELECT * FROM contact", new Contact { });
 
+            var numbers = await _sql.SelectDataAsync<Number, Number>("SELECT * FROM number", new Number { });
 
-        /// <summary>
-        /// Might not need to be a string,object dictionary, could potentially be a list since the values are not used.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>A string, object dictionary containing all public properties and their values.</returns>
-        private Dictionary<string, object> GetPropertiesOf<T>() {
-            Dictionary<string, object> properties
-                = new Dictionary<string, object>();
+            var emails = await _sql.SelectDataAsync<Email, Email>("SELECT * FROM email", new Email { });
 
-            foreach (var property in typeof(T).GetProperties())
+            var addresses = await _sql.SelectDataAsync<Address, Address>("SELECT * FROM address", new Address { });
+
+            var relation = await _sql.SelectDataAsync<Relation, Relation>("SELECT * FROM relation", new Relation { });
+
+            foreach (var contact in contacts)
             {
-                if (!properties.ContainsKey(property.Name))
+                var fullContact = new FullContactViewModel()
                 {
-                    properties[property.Name] = property.PropertyType;
-                }
-
+                    Id = contact.Id,
+                    FirstName = contact.FirstName,
+                    LastName = contact.LastName,
+                    ImageUrl = contact.ImageUrl,
+                    Numbers = numbers.Where(x => x.ContactId == contact.Id).ToList(),
+                    Emails = emails.Where(x => x.ContactId == contact.Id).ToList(),
+                    Addresses = addresses.Where(x => x.ContactId == contact.Id).ToList(),
+                    Relation = relation.Where(x => x.ContactId == contact.Id).First(),
+                };
+                fullContacts.Add(fullContact);
             }
 
-            return properties;
+            return fullContacts;
         }
 
-        /// <summary>
-        /// Converts an expando object to the type of T given that the expando object already mimicks T.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
-        /// <param name="expandoObject"></param>
-        /// <returns></returns>
-        private bool SerializeTo<T>(out T entity, ExpandoObject expandoObject)
-        {
-            entity = JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(expandoObject));
-            return entity != null;
-        }
+        
 
-        private async Task<IEnumerable<T>> ReadEntitiesAsync<T>(NpgsqlCommand command) where T : BaseEntity
-        {
-            T entity;
-              
-            var dictionary = GetPropertiesOf<T>();
-            List<ExpandoObject> rawEntities = new();
-            List<T> entities = new List<T>();
-            using (var reader = await command.ExecuteReaderAsync())
-            {
-                while (await reader.ReadAsync())
-                {
-                    ExpandoObject dynamicObject = new();
-                    foreach (var property in dictionary.Keys)
-                    {
-                        var parsedProperty = ToSQLFormat(property);
-                        var value = ConvertFromDBVal<object>(reader[parsedProperty]);
-                        dynamicObject.TryAdd(property, value);
-                    }
+            
 
-                    rawEntities.Add(dynamicObject);
-                }
-            }
+        
 
-            rawEntities.ForEach(rawEntity =>
-            {
-                if (SerializeTo(out entity, rawEntity))
-                {
-                    entities.Add(entity);
-                }
-            });
+        
 
-            return entities;
+        
 
-        }
-
-        public string ToSQLFormat(string str)
-        {
-            string pattern = @"(?<!^)(?=[A-Z])";
-
-            string[] split = Regex.Split(str, pattern, RegexOptions.IgnorePatternWhitespace);
-
-            return String.Join('_',split).ToLower();
-        }
-
-        private async Task<IEnumerable<TResult>> InteractWithDatabaseAsync<TResult>(Func<NpgsqlCommand, TResult> func) where TResult : IEnumerable<TResult>
-        {
-            var result = new List<TResult>();
-            TResult entity;
-            ExpandoObject dynamicObject = new();
-            var dictionary = GetPropertiesOf<TResult>();
-            try
-            {
-                var conn = await GetConnectionAsync();
-
-                result = func as List<TResult>;
+        //private (string, string) ToCommandValues(Dictionary<string, object> properties)
+        //{
+        //    foreach (var property in properties)
+        //    {
                 
+        //    }
 
-                conn.Close();
-                return result;
-            }
-            catch (PostgresException ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task InsertEntityAsync<T>(T entity) where T : BaseEntity
-        {
-            try
-            {
-                var conn = await GetConnectionAsync();
-
-                using var command = new NpgsqlCommand($@"INSERT INTO {ToSQLFormat(typeof(T).Name)}s VALUES()");
-            }
-            catch (PostgresException ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task<T> SelectEntityAsync<T>(int id) where T : BaseEntity
-        {
-            var conn = await GetConnectionAsync();
-            var command = new NpgsqlCommand($@"SELECT * FROM contacts WHERE id=@id");
-            command.Parameters.AddWithValue("id", id);
-            command.Connection = conn;
-            var commandstring = $@"SELECT * FROM contacts WHERE contact_id=@id";
-
-            var result = await ReadEntitiesAsync<T>(command);
-             
-            //Task<IEnumerable<T>> result = await InteractWithDatabaseAsync<T>(ReadEntitiesAsync<T>(command));
-
-            return result.First();
-        }
+        //    return (string.Empty, string.Empty);
+        //}
 
 
-        private static T? ConvertFromDBVal<T>(object obj)
-        {
-            if (obj == null || obj == DBNull.Value)
-            {
-                return default; // returns the default value for the type
-            }
-            return (T)obj;
-        }
+        
 
-        private static object ConvertToDBVal<T>(object obj)
-        {
-            if (obj == null || obj == string.Empty)
-            {
-                return DBNull.Value;
-            }
-            return (T)obj;
-        }
+
+        //public async Task<IEnumerable<FullContactViewModel>> SelectAllContactViewModels<T>() where T : FullContactViewModel
+        //{
+        //    var command = new NpgsqlCommand($@"SELECT * FROM {typeof(T).Name} WHERE id=@id");
+        //    command.Parameters.AddWithValue("id", id);
+        //    command.
+        //    var result = await InteractWithDBAsync<IEnumerable<T>>(() => ReadEntitiesAsync<T>(command));
+
+        //    return result;
+        //}
+
+
+
+        //public async Task<bool> InsertEntityAsync<T>(T entity) where T : BaseEntity
+        //{   
+        //    bool result = await InteractWithDBAsync<bool>(() => InsertEntity<T>(entity));
+
+        //    return result;
+        //}
+
+        //public async Task<T> SelectEntityAsync<T>(int id)
+        //{
+
+        //    var command = new NpgsqlCommand($@"SELECT * FROM {typeof(T).Name} WHERE id=@id");
+        //    command.Parameters.AddWithValue("id", id);
+
+        //    var result = await InteractWithDBAsync<IEnumerable<T>>(() => ReadEntitiesAsync<T>(command));
+
+        //    return result.First();
+        //}
+
+
+        
        
     }
 }

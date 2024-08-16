@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="ContactBook.Views.Components.IconButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContactBook.Views.Components"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d"
+             x:Name="iconButton"
+             d:DesignHeight="450" d:DesignWidth="800" BorderThickness="0">
+
+    <Border 
+            Cursor="Hand" 
+            IsHitTestVisible="True" 
+            Background="Transparent"
+            CornerRadius="{Binding BorderRadius, ElementName=iconButton}">
+        <iconPacks:PackIconUnicons x:Name="icon"
+                                   Kind="{Binding IconKind,ElementName=iconButton}"
+                                   Margin="{Binding IconMargin, ElementName=iconButton}"
+                                   VerticalAlignment="{Binding IconVerticalAlignment,ElementName=iconButton}"
+                                   HorizontalAlignment="Center" 
+                                   Foreground="#B8B3C5" 
+                                   Padding="3" 
+                                   IsHitTestVisible="False"/>
+
+        <Border.Triggers>
+
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation 
+                            Duration="0:0:0.05"
+                            Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                            From="Transparent" To="{Binding ActionColor, ElementName=iconButton}"/>
+                        <ColorAnimation 
+                            Duration="0:0:0.05"
+                            Storyboard.Target="{Binding Source={x:Reference icon}}"
+                            Storyboard.TargetProperty="Foreground.(SolidColorBrush.Color)"
+                            From="#B8B3C5" To="White"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation 
+                            Duration="0:0:0.05"
+                            Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                            From="{Binding ActionColor, ElementName=iconButton}" To="Transparent"/>
+                        <ColorAnimation 
+                            Duration="0:0:0.05"
+                            Storyboard.Target="{Binding Source={x:Reference icon}}"
+                            Storyboard.TargetProperty="Foreground.(SolidColorBrush.Color)"
+                            From="White" To="#B8B3C5"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+
+
+        </Border.Triggers>
+    </Border>
+</UserControl>

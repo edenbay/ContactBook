@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 namespace ContactBook.ViewModels.Base
 {
     [AddINotifyPropertyChangedInterface]
-    class BaseViewModel
+    public class BaseViewModel
     {
+        
+
     }
 }
