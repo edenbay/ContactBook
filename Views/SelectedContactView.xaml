@@ -8,8 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="450"
              xmlns:vm="clr-namespace:ContactBook.ViewModels"
              xmlns:components="clr-namespace:ContactBook.Views.Components"
-             d:DataContext="{d:DesignInstance vm:SelectedContactViewModel}">
-    <Grid Background="#FFD28383">
-            
+             d:DataContext="{d:DesignInstance vm:SelectedContactViewModel}"
+             Padding="0,1,0,0"
+             Background="Transparent">
+    <Grid Background="{DynamicResource Outline Variation}">
+        <components:SelectedContactItem/>
     </Grid>
 </UserControl>

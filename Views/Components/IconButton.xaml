@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ContactBook.Views.Components"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:components="clr-namespace:ContactBook.Views.Components"
              mc:Ignorable="d"
              x:Name="iconButton"
              d:DesignHeight="450" d:DesignWidth="800" BorderThickness="0">
@@ -21,7 +22,7 @@
                                    VerticalAlignment="{Binding IconVerticalAlignment,ElementName=iconButton}"
                                    HorizontalAlignment="Center" 
                                    Foreground="#B8B3C5" 
-                                   Padding="3" 
+                                   Padding="{Binding IconPadding, ElementName=iconButton}" 
                                    IsHitTestVisible="False"/>
 
         <Border.Triggers>

@@ -46,6 +46,18 @@ namespace ContactBook.Views.Components
 
 
 
+        public Thickness IconPadding
+        {
+            get { return (Thickness)GetValue(IconPaddingProperty); }
+            set { SetValue(IconPaddingProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IconPadding.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IconPaddingProperty =
+            DependencyProperty.Register("IconPadding", typeof(Thickness), typeof(IconButton), new PropertyMetadata(new Thickness(3)));
+
+
+
         public Color ActionColor
         {
             get { return (Color)GetValue(ActionColorProperty); }

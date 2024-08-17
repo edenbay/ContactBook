@@ -17,11 +17,11 @@
             <ListView.Resources>
                 <ControlTemplate x:Key="SelectedTemplate"  TargetType="ListViewItem">
                     <Border
-                    Margin="5,1"
-                    BorderBrush="{TemplateBinding BorderBrush}" 
-                    BorderThickness="1" 
-                    Background="{TemplateBinding Background}"
-                    CornerRadius="5" x:Name="border">
+                        Margin="5,1"
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="1" 
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="5" x:Name="border">
                         <ContentControl Content="{TemplateBinding Content}" />
                     </Border>
                 </ControlTemplate>

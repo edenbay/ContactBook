@@ -39,16 +39,44 @@
             <Border Grid.ColumnSpan="3" Background="{DynamicResource Surface Container Low}"
                        CornerRadius="5,5,0,0" PreviewMouseLeftButtonDown="InitiateWindowResize"/>
 
-            <ContentControl Content="{Binding ContactListViewModel}" 
-                    Grid.Column="1" Grid.Row="2">
-                <ContentControl.Effect>
+            <DockPanel Grid.Column="1" Grid.Row="2"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Height="Auto">
+                <DockPanel.Effect>
                     <DropShadowEffect Color="DimGray" Direction="180" BlurRadius="2" ShadowDepth="2"/>
-                </ContentControl.Effect>
-            </ContentControl>
+                </DockPanel.Effect>
+                
+                <StackPanel Height="50" Width="250"  DockPanel.Dock="Top">
+                    <StackPanel Background="{DynamicResource Surface Container}" Width="Auto" Height="48">
+                        <StackPanel Orientation="Horizontal" Margin="25,1,0,0">
+                            <Label Content="Contacts" 
+                                   VerticalAlignment="Center" 
+                                   FontFamily="{DynamicResource Roboto}"
+                                   Foreground="{DynamicResource On Surface}"
+                                   FontWeight="Regular"
+                                   FontSize="14"/>
+                            <components:IconButton IconKind="EditAltLine"
+                                                   Margin="115,0"
+                                                   Height="45" 
+                                                   Width="45" 
+                                                   IconPadding="0"  
+                                                   HorizontalAlignment="Right"
+                                                   ToolTip="Add new contact"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Rectangle Height="2" VerticalAlignment="Bottom"/>
+                </StackPanel>
+
+
+                <ContentControl Content="{Binding ContactListViewModel}">
+
+                </ContentControl>
+            </DockPanel>
 
             <ContentControl Content="{Binding CurrentViewModel}"
                 Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"/>
-            
+
             <Rectangle Fill="{DynamicResource Outline Variation}" Grid.ColumnSpan="3" Grid.Row="1" RadiusY="2">
                 <Rectangle.Effect>
                     <DropShadowEffect/>
@@ -78,7 +106,7 @@
                 <components:IconButton IconKind="WindowMaximizeLine" PreviewMouseDown="ChangeWindowSize" Width="45"/>
 
                 <components:IconButton IconKind="TimesLine" BorderRadius="0,6,0,0" 
-                                       ActionColor="IndianRed"
+                                       ActionColor="Red"
                                        PreviewMouseDown="CloseWindow" Width="45"/>
 
             </StackPanel>

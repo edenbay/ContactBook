@@ -13,24 +13,6 @@ namespace ContactBook.ViewModels
 {
     public class FullContactViewModel : BaseViewModel
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ImageUrl { get; set; }
-        public Relation Relation { get; set; }
-        public List<Address> Addresses { get; set; }
-        public List<Email> Emails { get; set; }
-        public List<Number> Numbers { get; set; }
-
-
-        public FullContactViewModel()
-        {
-            Addresses = new List<Address>();
-            Emails = new List<Email>();
-            Numbers = new List<Number>();
-        }
-
-        
-
+       
     }
 }

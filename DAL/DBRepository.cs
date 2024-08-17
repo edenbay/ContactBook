@@ -19,9 +19,9 @@ namespace ContactBook.DAL
            _sql = new SqlDataAccess();
         }
 
-        public async Task<List<FullContactViewModel>> GetContactsAsync()
+        public async Task<List<SelectedContact>> GetContactsAsync()
         {
-            var fullContacts = new List<FullContactViewModel>();
+            var fullContacts = new List<SelectedContact>();
 
             var contacts = await _sql.SelectDataAsync<Contact, Contact>("SELECT * FROM contact", new Contact { });
 
@@ -35,7 +35,7 @@ namespace ContactBook.DAL
 
             foreach (var contact in contacts)
             {
-                var fullContact = new FullContactViewModel()
+                var fullContact = new SelectedContact()
                 {
                     Id = contact.Id,
                     FirstName = contact.FirstName,
@@ -52,7 +52,33 @@ namespace ContactBook.DAL
             return fullContacts;
         }
 
-        
+        public async Task<SelectedContact> GetContactAsync(int id)
+        {
+            var contacts = await _sql.SelectDataAsync<Contact, Contact>($"SELECT * FROM contact where id={id}", new Contact { });
+            var contact = contacts.First();
+
+            var numbers = await _sql.SelectDataAsync<Number, Number>($"SELECT * FROM number where contact_id={id}", new Number { });
+
+            var emails = await _sql.SelectDataAsync<Email, Email>($"SELECT * FROM email contact_id={id}", new Email { });
+
+            var addresses = await _sql.SelectDataAsync<Address, Address>($"SELECT * FROM address contact_id={id}", new Address { });
+
+            var relation = await _sql.SelectDataAsync<Relation, Relation>($"SELECT * FROM relation contact_id={id}", new Relation { });
+
+            var fullContact = new SelectedContact()
+            {
+                Id = contact.Id,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                ImageUrl = contact.ImageUrl,
+                Numbers = numbers.Where(x => x.ContactId == contact.Id).ToList(),
+                Emails = emails.Where(x => x.ContactId == contact.Id).ToList(),
+                Addresses = addresses.Where(x => x.ContactId == contact.Id).ToList(),
+                Relation = relation.Where(x => x.ContactId == contact.Id).First(),
+            };
+
+            return fullContact;
+        }
 
             
 
