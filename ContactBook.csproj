@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Contacts.db" />
+    <None Remove="contacts.db" />
     <None Remove="Fonts\Roboto\Roboto-Black.ttf" />
     <None Remove="Fonts\Roboto\Roboto-BlackItalic.ttf" />
     <None Remove="Fonts\Roboto\Roboto-Bold.ttf" />
@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Contacts.db">
+    <Content Include="contacts.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
