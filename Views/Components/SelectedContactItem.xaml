@@ -11,12 +11,6 @@
         <Grid>
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <!--<Ellipse Width="110" Height="110" 
-                             Fill="{DynamicResource On Surface}" StrokeThickness="4" 
-                             Stroke="{DynamicResource Surface Container Lowest}"
-                             HorizontalAlignment="Left"
-                             VerticalAlignment="Top"
-                             Margin="25,25,0,0"/>-->
                     <Ellipse Width="110" Height="110" StrokeThickness="4" 
                              Stroke="{DynamicResource Surface Container Lowest}"
                              HorizontalAlignment="Left"
@@ -45,6 +39,18 @@
                                FontSize="20"
                                FontWeight="Regular"/>
                     </StackPanel>
+                    <local:IconButton 
+                                x:Name="addContact"
+                                IconKind="EditAltLine"
+                                Margin="0,0,0,10"
+                                Height="45" 
+                                Width="45" 
+                                IconPadding="0"  
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                ToolTip="Add new contact">
+                        
+                    </local:IconButton>
                 </StackPanel>
                 <Rectangle Fill="{DynamicResource Surface Dim}" Height="1" Margin="0,25,0,5"/>
                 <Label Content="Contact information" 

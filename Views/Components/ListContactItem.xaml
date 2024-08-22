@@ -23,12 +23,11 @@
                         BorderThickness="0">
                 <Label Content="{Binding Initials}" 
                         BorderBrush="{x:Null}"
-                        FontSize="18" BorderThickness="0"  
+                        FontSize="13" BorderThickness="0"  
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Foreground="{StaticResource Inverse On Surface}" 
-                        FontFamily="Segoe UI Semibold"
-                        />
+                        FontFamily="Segoe UI Semibold"/>
             </Border>
 
             <Ellipse Width="35" Height="35" Margin="6,2,190,6" >

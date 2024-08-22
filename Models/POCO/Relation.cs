@@ -7,9 +7,8 @@ using ContactBook.Models.Base;
 
 namespace ContactBook.Models
 {
-    public class Relation : BaseEntity
+    public class Relation : BaseEntityForeign
     {
         public string Connection { get; set; }
-        public int ContactId { get; set; }
     }
 }

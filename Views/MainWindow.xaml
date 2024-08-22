@@ -18,10 +18,17 @@
         mc:Ignorable="d"
         x:Name="main"
         Title="MainWindow" MinHeight="600" MinWidth="800">
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="15"/>
     </WindowChrome.WindowChrome>
-    <Border Background="{DynamicResource Surface Container Lowest}" BorderBrush="{DynamicResource Outline Variation}" BorderThickness="1" CornerRadius="6" ClipToBounds="True">
+    
+    <!--Whole Window-->
+    <Border Background="{DynamicResource Surface Container Lowest}" 
+            BorderBrush="{DynamicResource Outline Variation}" 
+            BorderThickness="1" 
+            CornerRadius="6" 
+            ClipToBounds="True">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -31,14 +38,16 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="269*"/>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="270*"/>
 
             </Grid.ColumnDefinitions>
 
+            <!--Chrome Header-->
             <Border Grid.ColumnSpan="3" Background="{DynamicResource Surface Container Low}"
                        CornerRadius="5,5,0,0" PreviewMouseLeftButtonDown="InitiateWindowResize"/>
 
+            <!--Add Contacts and Contacts List-->
             <DockPanel Grid.Column="1" Grid.Row="2"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
@@ -47,7 +56,8 @@
                     <DropShadowEffect Color="DimGray" Direction="180" BlurRadius="2" ShadowDepth="2"/>
                 </DockPanel.Effect>
                 
-                <StackPanel Height="50" Width="250"  DockPanel.Dock="Top">
+                <!--Add Contact Panel-->
+                <StackPanel Height="50" Width="Auto"  DockPanel.Dock="Top">
                     <StackPanel Background="{DynamicResource Surface Container}" Width="Auto" Height="48">
                         <StackPanel Orientation="Horizontal" Margin="25,1,0,0">
                             <Label Content="Contacts" 
@@ -56,50 +66,60 @@
                                    Foreground="{DynamicResource On Surface}"
                                    FontWeight="Regular"
                                    FontSize="14"/>
-                            <components:IconButton IconKind="EditAltLine"
-                                                   Margin="115,0"
-                                                   Height="45" 
-                                                   Width="45" 
-                                                   IconPadding="0"  
-                                                   HorizontalAlignment="Right"
-                                                   ToolTip="Add new contact"/>
+                            <!--Add Contact Button-->
+                            <components:IconButton 
+                                x:Name="addContact"
+                                IconKind="EditAltLine"
+                                Margin="115,0"
+                                Height="45" 
+                                Width="45" 
+                                IconPadding="0"  
+                                HorizontalAlignment="Right"
+                                ToolTip="Add new contact">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding ElementName=addContact}">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="BeginAddNewContact"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </components:IconButton>
+                            
                         </StackPanel>
                     </StackPanel>
                     <Rectangle Height="2" VerticalAlignment="Bottom"/>
                 </StackPanel>
 
-
-                <ContentControl Content="{Binding ContactListViewModel}">
-
-                </ContentControl>
+                <!--Contact List-->
+                <ContentControl Content="{Binding ContactListViewModel}"/>
             </DockPanel>
 
+            <!--Current View Model-->    
             <ContentControl Content="{Binding CurrentViewModel}"
                 Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"/>
 
+            <!--Header/Content divider-->    
             <Rectangle Fill="{DynamicResource Outline Variation}" Grid.ColumnSpan="3" Grid.Row="1" RadiusY="2">
                 <Rectangle.Effect>
                     <DropShadowEffect/>
                 </Rectangle.Effect>
-
             </Rectangle>
 
-
+            <!--Search Bar-->
             <components:SearchBar Grid.Column="1" 
                                   HorizontalAlignment="Center"  
                                   VerticalAlignment="Center" 
-                                  Height="30" Width="226"
+                                  Height="30" Width="Auto"
                                   PreviewKeyDown="InitiateSearch"/>
 
-
+            
+            <!--Window Controls-->    
             <StackPanel Grid.Column="2" 
                         Orientation="Horizontal"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Right"
+                        WindowChrome.IsHitTestVisibleInChrome="True"
                         Margin="373,0,0,0"  
                         Height="45"
-                        
-                        WindowChrome.IsHitTestVisibleInChrome="True"  Width="135">
+                        Width="135">
 
                 <components:IconButton IconKind="MinusLine" IconMargin="0,8,0,0" PreviewMouseDown="MinimizeWindow" Width="45"/>
 
@@ -110,9 +130,6 @@
                                        PreviewMouseDown="CloseWindow" Width="45"/>
 
             </StackPanel>
-
-
-
         </Grid>
     </Border>
 </Window>

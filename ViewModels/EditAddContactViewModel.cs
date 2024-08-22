@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace ContactBook.ViewModels
 {
-    public class SelectedContactViewModel : BaseViewModel
+    public class EditAddContactViewModel : BaseViewModel
     {
-        public SelectedContactViewModel()
-        {
-            
-        }
 
-        
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ContactBook.ViewModels
@@ -21,9 +22,17 @@ namespace ContactBook.ViewModels
 
         public MainViewModel()
         {
-            
+            testRepo = new();
         }
 
+        private DBRepository testRepo;
 
+        public void BeginAddNewContact(object sender, RoutedEventArgs e)
+        {
+            testRepo.AddAdamWest();
+            //CurrentViewModel = null;
+
+            //CurrentViewModel = new ContactListViewModel();
+        }
     }
 }

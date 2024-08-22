@@ -19,11 +19,15 @@ namespace ContactBook.Models
         public ListContact(Contact contact, Relation relation)
         {
            FullName = contact.FirstName + " " + contact.LastName;
-           Relationship = relation.Connection;
-
-           if (contact.ImageUrl != null)
+           if (relation != null)
             {
-                Image = new BitmapImage(new Uri(contact.ImageUrl));
+
+           Relationship = relation.Connection;
+            }
+
+           if (contact.Image != null)
+            {
+                Image = new BitmapImage(new Uri(contact.Image));
                 _initialsVisibility = System.Windows.Visibility.Hidden;
             }
            else

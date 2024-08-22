@@ -12,8 +12,10 @@
              BorderThickness="0"
              BorderBrush="{x:Null}">
     <Grid Background="{DynamicResource Surface Container Low}">
+        
         <ListView ItemsSource="{Binding Contacts}" Background="{x:Null}"
-                  PreviewMouseLeftButtonUp="ItemClick" BorderBrush="{x:Null}">
+                  PreviewMouseLeftButtonUp="ItemClick" BorderBrush="{x:Null}"
+                  VerticalContentAlignment="Center">
             <ListView.Resources>
                 <ControlTemplate x:Key="SelectedTemplate"  TargetType="ListViewItem">
                     <Border

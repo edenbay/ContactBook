@@ -8,15 +8,41 @@ using System.Dynamic;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media.Imaging;
 namespace ContactBook.DAL
 {
     internal class DBRepository
     {
-        private SqlDataAccess _sql;
-       
+        private SqliteDataAccess _sql;
+        private SqliteDataAccess _sqlite;
+
         public DBRepository()
         {
-           _sql = new SqlDataAccess();
+           _sql = new SqliteDataAccess();
+            _sqlite = new SqliteDataAccess();
+        }
+
+        public List<SelectedContact> GetSqliteContactAsync()
+        {
+            var contactList = _sqlite.LoadContacts();
+            var fullContacts = new List<SelectedContact>();
+            foreach (var contact in contactList)
+            {
+                var fullContact = new SelectedContact()
+                {
+                    Id = contact.Id,
+                    FirstName = contact.FirstName,
+                    LastName = contact.LastName,
+                    ImageUrl = contact.Image,
+                };
+                fullContacts.Add(fullContact);
+            }
+            return fullContacts;
+        }
+
+        public void AddAdamWest()
+        {
+            _sqlite.SaveContact(new Contact() { FirstName = "wdam", LastName = "west"});
         }
 
         public async Task<List<SelectedContact>> GetContactsAsync()
@@ -40,17 +66,37 @@ namespace ContactBook.DAL
                     Id = contact.Id,
                     FirstName = contact.FirstName,
                     LastName = contact.LastName,
-                    ImageUrl = contact.ImageUrl,
-                    Numbers = numbers.Where(x => x.ContactId == contact.Id).ToList(),
-                    Emails = emails.Where(x => x.ContactId == contact.Id).ToList(),
-                    Addresses = addresses.Where(x => x.ContactId == contact.Id).ToList(),
-                    Relation = relation.Where(x => x.ContactId == contact.Id).First(),
+                    ImageUrl = contact.Image,
+                    Numbers = RetrieveWhereId(numbers, contact.Id),
+                    Emails = RetrieveWhereId(emails, contact.Id),
+                    Addresses = RetrieveWhereId(addresses, contact.Id),
+                    Relation = RetrieveFirstWhereId(relation, contact.Id),
                 };
                 fullContacts.Add(fullContact);
             }
 
             return fullContacts;
         }
+
+        private List<T> RetrieveWhereId<T>(List<T> tSource, int id) where T : BaseEntityForeign
+        {
+            if (tSource.Where(x => x.ContactId == id).Count() > 0)
+                return tSource.Where(x => x.ContactId == id).ToList();
+            else
+                return new List<T>();
+        }
+
+        private T RetrieveFirstWhereId<T>(List<T> tSource, int id) 
+            where T : BaseEntityForeign, new()
+        {
+            var list = RetrieveWhereId(tSource, id);
+
+            if (list.Count > 0) 
+                return list[0];
+            else 
+                return new T();
+        }
+
 
         public async Task<SelectedContact> GetContactAsync(int id)
         {
@@ -70,11 +116,11 @@ namespace ContactBook.DAL
                 Id = contact.Id,
                 FirstName = contact.FirstName,
                 LastName = contact.LastName,
-                ImageUrl = contact.ImageUrl,
-                Numbers = numbers.Where(x => x.ContactId == contact.Id).ToList(),
-                Emails = emails.Where(x => x.ContactId == contact.Id).ToList(),
-                Addresses = addresses.Where(x => x.ContactId == contact.Id).ToList(),
-                Relation = relation.Where(x => x.ContactId == contact.Id).First(),
+                ImageUrl = contact.Image,
+                Numbers = RetrieveWhereId(numbers, contact.Id),
+                Emails = RetrieveWhereId(emails, contact.Id),
+                Addresses = RetrieveWhereId(addresses, contact.Id),
+                Relation = RetrieveFirstWhereId(relation, contact.Id),
             };
 
             return fullContact;

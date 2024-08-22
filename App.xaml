@@ -4,19 +4,21 @@
              xmlns:local="clr-namespace:ContactBook"
              xmlns:vm="clr-namespace:ContactBook.ViewModels"
              xmlns:views="clr-namespace:ContactBook.Views"
+             xmlns:components="clr-namespace:ContactBook.Views.Components"
              StartupUri="Views/MainWindow.xaml">
+   
     <Application.Resources>
         <!--ViewModel Views connections-->
-            <DataTemplate DataType="{x:Type vm:SelectedContactViewModel}">
-                <views:SelectedContactView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:ContactListViewModel}">
-                <views:ContactListView/>
-            </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SelectedContactViewModel}">
+            <views:SelectedContactView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ContactListViewModel}">
+            <views:ContactListView/>
+        </DataTemplate>
         <SolidColorBrush x:Key="Outline" Color="#938F99"/>
         <SolidColorBrush x:Key="Outline Variation" Color="#49454F"/>
         <SolidColorBrush x:Key="Inverse Surface" Color="#E6E0E9"/>
-        <SolidColorBrush x:Key="On Surface" Color="#E6E0E9"/> 
+        <SolidColorBrush x:Key="On Surface" Color="#E6E0E9"/>
         <SolidColorBrush x:Key="On Surface Variation" Color="#CAC4D0"/>
         <SolidColorBrush x:Key="Inverse On Surface" Color="#322F35"/>
         <SolidColorBrush x:Key="Surface Dim" Color="#141218"/>
@@ -30,7 +32,6 @@
 
 
         <FontFamily x:Key="Roboto">pack://application:,,,/Fonts/Roboto/#Roboto</FontFamily>
-        
-        
+
     </Application.Resources>
 </Application>

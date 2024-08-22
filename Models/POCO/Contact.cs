@@ -14,15 +14,15 @@ namespace ContactBook.Models
         
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string ImageUrl { get; set; }
+        public string Image { get; set; }
 
 
-        public Contact(int id, string firstName, string lastName, string imageUrl)
+        public Contact(int id, string firstName, string lastName, string image)
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
-            ImageUrl = imageUrl;
+            Image = image;
         }
 
         public Contact()
