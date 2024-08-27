@@ -9,7 +9,7 @@
              d:DataContext="{d:DesignInstance local:ContactInformationItem}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Border>
-        <StackPanel Orientation="Horizontal" Margin="45,0">
+        <StackPanel Orientation="Horizontal">
             <Grid Margin="0,0,15,0">
                 <iconPacks:PackIconModern Kind="{Binding Icon}" Foreground="{DynamicResource On Surface}" Margin="5"/>
             </Grid>

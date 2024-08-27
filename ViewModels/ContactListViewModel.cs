@@ -27,36 +27,56 @@ namespace ContactBook.ViewModels
         /// </summary>
         public int ContactCount { get; set; }
 
-        public RelayCommand SelectNewContactCommand { get; }
-
-        public event Action<SelectedContact> SelectedContactChanged;
+        /// <summary>
+        /// Allows for communication between MainViewModel and this to select a contact.
+        /// </summary>
+        public ICommand SelectNewContactCommand { get; }
 
         public ContactListViewModel()
         {
             SelectNewContactCommand = new SelectNewContactCommand(null, this);
             _repo = new();
-            FillContactsList();
+            FillContactsListOnInit();
 
         }
 
-        public void RefreshContactsList()
+        /// <summary>
+        /// Adds a new contact to the database.
+        /// </summary>
+        /// <param name="contact"></param>
+        #warning Method should be placed in EditAddContactViewModel.cs
+        public async void AddNewContact(SelectedContact contact)
         {
-            FillContactsList();
+            var fullContact = await _repo.SaveContactAsync(contact);
+
+            if (fullContact.BaseContact.Id != default)
+            {
+                Contacts.Add(new ListContact(fullContact));
+                ContactCount = await _repo.GetContactsCount();
+            }
+
+            
         }
 
-        private async void FillContactsList()
+        /// <summary>
+        /// Retrieves the amount of and contacts from the database to be used on program initialization.
+        /// </summary>
+        private async void FillContactsListOnInit()
         {
-            var fullContacts = await _repo.GetContactsAsync();
             ContactCount = await _repo.GetContactsCount();
-            Contacts.Clear();
+            var fullContacts = await _repo.GetContactsAsync();
 
             foreach (var contact in fullContacts)
             {
-                var contactItem = new ListContact(contact.BaseContact,contact.Relation);
+                var contactItem = new ListContact(contact.BaseContact, contact.Relation);
 
                 Contacts.Add(contactItem);
             }
         }
+
+
+
+        
 
         /// <summary>
         /// Converts a ListContactItem to a SelectedContactItem and tells all subscribers

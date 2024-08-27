@@ -72,25 +72,30 @@
                            FontSize="16"
                            FontWeight="SemiBold"
                            Margin="25,5"/>
-                    <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
                 
+                    <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
+
                     <StackPanel Orientation="Horizontal" Margin="45,0">
-                        <ListView ItemsSource="{Binding SelectedContact.Addresses}" Background="Transparent" >
+                        <ListView ItemsSource="{Binding SelectedContact.Addresses}" Background="Transparent" 
+                                  BorderBrush="{x:Null}" >
                            
                         </ListView>
                  </StackPanel>
-                
-                <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
 
+                    <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
+                
                     <StackPanel Orientation="Horizontal" Margin="45,0" Height="Auto" Width="Auto">
-                        <ListView ItemsSource="{Binding SelectedContact.Emails}" Background="Transparent">
+                        <ListView ItemsSource="{Binding SelectedContact.Emails}" Background="Transparent" 
+                                  BorderBrush="{x:Null}">
                           
                         </ListView>
                  </StackPanel>
 
-                <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
+                    <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
+                
                     <StackPanel Orientation="Horizontal" Margin="45,0" Height="Auto" Width="Auto">
-                        <ListView ItemsSource="{Binding SelectedContact.Numbers}" Background="Transparent">
+                        <ListView ItemsSource="{Binding SelectedContact.Numbers}" Background="Transparent" 
+                                  BorderBrush="{x:Null}">
 
                         </ListView>
                     </StackPanel>

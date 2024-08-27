@@ -32,7 +32,7 @@
         <SolidColorBrush x:Key="Surface Container" Color="#211F26"/>
         <SolidColorBrush x:Key="Surface Container High" Color="#2B2930"/>
         <SolidColorBrush x:Key="Surface Container Highest" Color="#36343B"/>
-
+        <ResourceDictionary x:Key="WindowToolTip" Source="/Views/Templates/WindowToolTip.xaml"/>
 
         <FontFamily x:Key="Roboto">pack://application:,,,/Fonts/Roboto/#Roboto</FontFamily>
 

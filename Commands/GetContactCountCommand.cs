@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace ContactBook.Commands
 {
+    [Obsolete("Does not do what it's supposed to.")]
+#warning Duplicate of SelectNewContactCommand
     public class GetContactCountCommand : RelayCommand
     {
         private readonly ContactListViewModel _contactListViewModel;

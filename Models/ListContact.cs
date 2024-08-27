@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -43,9 +44,9 @@ namespace ContactBook.Models
                 var rawInitials = $"{contact.FirstName.First()}{contact.LastName.First()}";
                 Initials = rawInitials.ToUpper();
            }
-           
-
         }
+
+        public ListContact(SelectedContact selectedContact) : this(selectedContact.BaseContact, selectedContact.Relation) { }
 
     }
 }

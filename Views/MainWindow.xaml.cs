@@ -84,8 +84,10 @@ namespace ContactBook
             }
         }
 
+#warning No logic has been provided.
         private void InitiateSearch(object sender, KeyEventArgs e)
         {
+            var h = sender;
             if (e.Key == Key.Enter)
             {
                 //Code for searching. Call MainViewModel

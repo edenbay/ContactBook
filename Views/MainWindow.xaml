@@ -17,11 +17,14 @@
         SizeChanged="HasSizeChanged"
         mc:Ignorable="d"
         x:Name="main"
-        Title="MainWindow" MinHeight="600" MinWidth="800">
+        Title="MainWindow" MinHeight="600" MinWidth="800"
+        >
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="15"/>
     </WindowChrome.WindowChrome>
+
+
 
     <!--Whole Window-->
     <Border Background="{DynamicResource Surface Container Lowest}" 
@@ -59,43 +62,50 @@
                     </DockPanel.Effect>
 
                     <!--Add Contact Panel-->
-                    <StackPanel Height="50" Width="Auto"  DockPanel.Dock="Top">
-                        <StackPanel Background="{DynamicResource Surface Container}" Width="Auto" Height="48">
-                            <StackPanel Orientation="Horizontal" Margin="25,1,0,0">
-                                <Label Content="{Binding ContactListViewModel.ContactCount}" 
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Left"
-                                       FontFamily="{DynamicResource Roboto}"
-                                       Foreground="{DynamicResource On Surface}"
-                                       FontWeight="Regular"
-                                       FontSize="14"/>
+                    <StackPanel Height="47" Width="Auto" 
+                                DockPanel.Dock="Top" 
+                                Orientation="Vertical" 
+                                Background="{DynamicResource Surface Container}">
+                        <Grid Width="280">
+                            <!--Contacts Count-->
+                            <Grid Width="150" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ContactListViewModel.ContactCount}" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           FontFamily="{DynamicResource Roboto}"
+                                           Foreground="{DynamicResource On Surface}"
+                                           FontWeight="Regular"
+                                           FontSize="14"
+                                           Padding="10,0"/>
                                 <Label Content="Contacts" 
                                        VerticalAlignment="Center" 
                                        FontFamily="{DynamicResource Roboto}"
                                        Foreground="{DynamicResource On Surface}"
                                        FontWeight="Regular"
-                                       FontSize="14"
-                                       Padding="0,10,10,10"/>
-                                <components:IconButton
-                                    HorizontalAlignment="Right"
+                                       FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                        
+                            <!--Add Contact Button-->
+                            <components:IconButton
                                     x:Name="addContact"
                                     IconKind="EditAltLine"
                                     Height="45" 
                                     Width="45" 
                                     IconPadding="0"
-                                    ToolTip="Add new contact">
-                                    <b:Interaction.Triggers>
-                                        <b:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding ElementName=addContact}">
-                                            <b:CallMethodAction TargetObject="{Binding}" MethodName="BeginAddNewContact"/>
-                                        </b:EventTrigger>
-                                    </b:Interaction.Triggers>
-                                </components:IconButton>
-                                <!--Add Contact Button-->
-
-                            </StackPanel>
-                        </StackPanel>
-                        <Rectangle Height="2" VerticalAlignment="Bottom"/>
+                                    ToolTip="Add new contact"
+                                    HorizontalAlignment="Right">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding ElementName=addContact}">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="BeginAddNewContact"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </components:IconButton>
+                        </Grid>
                     </StackPanel>
+                        <Rectangle Height="2" VerticalAlignment="Bottom" DockPanel.Dock="Top"/>
+                    
 
                     <!--Contact List-->
                     <ContentControl Content="{Binding ContactListViewModel}"/>
@@ -121,31 +131,33 @@
 
 
                 <!--Window Controls-->
-                <StackPanel Grid.Column="2" 
-                            Orientation="Horizontal"
+                <Border Grid.Column="2" 
+                            Padding="45,0,0,0"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             WindowChrome.IsHitTestVisibleInChrome="True"
-                            Margin="373,0,0,0"  
-                            Height="45"
-                            Width="135">
-
-                    <components:IconButton IconKind="MinusLine" 
+                            Margin="314,0,0,0"  
+                            Width="194">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Height="45">
+                        <components:IconButton IconKind="MinusLine" 
                                            IconMargin="0,8,0,0" 
                                            PreviewMouseDown="MinimizeWindow" 
                                            Width="45"/>
 
-                    <components:IconButton IconKind="WindowMaximizeLine" 
+                        <components:IconButton IconKind="WindowMaximizeLine" 
                                            PreviewMouseDown="ChangeWindowSize" 
                                            Width="45"/>
 
-                    <components:IconButton IconKind="TimesLine" 
+                        <components:IconButton IconKind="TimesLine" 
                                            BorderRadius="0,6,0,0" 
                                            ActionColor="Red"
                                            PreviewMouseDown="CloseWindow" 
                                            Width="45"/>
-
-                </StackPanel>
+                    </StackPanel>
+                </Border>
             </Grid>
 
             <ContentControl Content="{Binding EditAddContactViewModel}" Width="480"

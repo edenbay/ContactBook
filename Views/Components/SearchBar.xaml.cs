@@ -21,8 +21,6 @@ namespace ContactBook.Views.Components
     public partial class SearchBar : UserControl
     {
 
-
-
         private Visibility _showPreview
         {
             get { return (Visibility)GetValue(_showPreviewProperty); }
@@ -48,19 +46,9 @@ namespace ContactBook.Views.Components
             _showPreview = (searchBox.Text.Length > 0) ? Visibility.Hidden : Visibility.Visible;
         }
 
-        private void textBox_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void SearchText(object sender, KeyEventArgs e)
+        private void InitiateSearch(object sender, KeyEventArgs e)
         {
 
-
-            if (e.Key == Key.Enter)
-            {
-               
-            }
         }
     }
 }

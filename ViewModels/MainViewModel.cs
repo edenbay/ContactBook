@@ -17,9 +17,9 @@ namespace ContactBook.ViewModels
         {
             
         }
-        DBRepository testRepo = new();
 
-        public async void BeginAddNewContact(object sender, RoutedEventArgs e)
+
+        public void BeginAddNewContact(object sender, RoutedEventArgs e)
         {
             var testContact = new SelectedContact(
                 new Contact() { FirstName = "Adam", LastName = "Smith" },
@@ -29,10 +29,7 @@ namespace ContactBook.ViewModels
                 new List<Number>() { new Number() { Digits = "07040201932" } }
                 );
 
-            await testRepo.SaveContactAsync(testContact);
-
-            ContactListViewModel.RefreshContactsList();
-
+            ContactListViewModel.AddNewContact(testContact);
         }
     }
 }
