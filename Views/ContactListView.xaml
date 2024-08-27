@@ -4,18 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ContactBook.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
              xmlns:vm="clr-namespace:ContactBook.ViewModels"
-            xmlns:components="clr-namespace:ContactBook.Views.Components"
-            d:DataContext="{d:DesignInstance vm:ContactListViewModel}"
+             xmlns:components="clr-namespace:ContactBook.Views.Components"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance vm:ContactListViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800"
              BorderThickness="0"
              BorderBrush="{x:Null}">
     <Grid Background="{DynamicResource Surface Container Low}">
+        
         <ListView ItemsSource="{Binding Contacts}" Background="{x:Null}"
-                  PreviewMouseLeftButtonUp="ItemClick" BorderBrush="{x:Null}">
+                  BorderBrush="{x:Null}"
+                  VerticalContentAlignment="Center">
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                    <b:CallMethodAction TargetObject="{Binding}" MethodName="ItemClick"/>
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
             <ListView.Resources>
-                <ControlTemplate x:Key="SelectedTemplate"  TargetType="ListViewItem">
+                <ControlTemplate x:Key="SelectedTemplate"  TargetType="ListViewItem" x:Name="selected">
                     <Border
                         Margin="5,1"
                         BorderBrush="{TemplateBinding BorderBrush}" 
@@ -49,13 +57,10 @@
                                 <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
-                       
-
                     </Style.Triggers>
                 </Style>
-
-               
             </ListView.Resources>
+            
         </ListView>
     </Grid>
 </UserControl>

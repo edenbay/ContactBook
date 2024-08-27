@@ -10,6 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Enums\**" />
+    <EmbeddedResource Remove="Models\Enums\**" />
+    <None Remove="Models\Enums\**" />
+    <Page Remove="Models\Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="contacts.db" />
     <None Remove="Fonts\Roboto\Roboto-Black.ttf" />
     <None Remove="Fonts\Roboto\Roboto-BlackItalic.ttf" />
     <None Remove="Fonts\Roboto\Roboto-Bold.ttf" />
@@ -25,6 +33,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="contacts.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="5.0.0" />
     <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
@@ -34,11 +48,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql" Version="8.0.3" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Enums\" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
   </ItemGroup>
 
   <ItemGroup>

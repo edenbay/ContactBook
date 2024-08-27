@@ -1,15 +1,7 @@
-﻿using ContactBook.Commands;
-using ContactBook.DAL;
+﻿using ContactBook.DAL;
 using ContactBook.Models;
 using ContactBook.ViewModels.Base;
-using ContactBook.Views.Components;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using System.Windows;
 
 namespace ContactBook.ViewModels
 {
@@ -17,13 +9,30 @@ namespace ContactBook.ViewModels
     {
         public BaseViewModel CurrentViewModel { get; set; } = new SelectedContactViewModel();
 
-        public BaseViewModel ContactListViewModel { get; init; } = new ContactListViewModel();
+        public ContactListViewModel ContactListViewModel { get; init; } = new ContactListViewModel();
+
+        public EditAddContactViewModel EditAddContactViewModel { get; private set; }
 
         public MainViewModel()
         {
             
         }
+        DBRepository testRepo = new();
 
+        public async void BeginAddNewContact(object sender, RoutedEventArgs e)
+        {
+            var testContact = new SelectedContact(
+                new Contact() { FirstName = "Adam", LastName = "Smith" },
+                new Relation() { Connection = "Friend" },
+                new List<Email>() { new Email() { Address = "josh.homme@hotmail.com" } },
+                new List<Address>() { new Address() { Location = "general baker st 75" } },
+                new List<Number>() { new Number() { Digits = "07040201932" } }
+                );
 
+            await testRepo.SaveContactAsync(testContact);
+
+            ContactListViewModel.RefreshContactsList();
+
+        }
     }
 }

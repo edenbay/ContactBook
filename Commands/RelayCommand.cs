@@ -20,7 +20,7 @@ namespace ContactBook.Commands
 
         public bool CanExecute(object? parameter) => true;
 
-        public void Execute(object? parameter)
+        public virtual void Execute(object? parameter)
         {
             if (parameter != null)
             {

@@ -21,21 +21,36 @@ namespace ContactBook.Views
     /// </summary>
     public partial class ContactListView : UserControl
     {
+        public ListContactItem SelectedContact
+        {
+            get { return (ListContactItem)GetValue(SelectedContactProperty); }
+            set { SetValue(SelectedContactProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedContactProperty =
+            DependencyProperty.Register("SelectedContact", typeof(ListContactItem), typeof(ContactListView), new PropertyMetadata(null));
+
+
         public ContactListView()
         {
             InitializeComponent();
         }
 
-        private void ItemClick(object sender, MouseButtonEventArgs e)
+        public void ItemClick(object sender, MouseButtonEventArgs e)
         {
+            //PreviewMouseLeftButtonUp = "ItemClick"
             var list = sender as ListView;
             if (list.SelectedItem != null)
             {
-                
-                
                 var item = list.SelectedItem as ListContactItem;
-                
+                SelectedContact = item;  
             }
+        }
+
+        private void ItemDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

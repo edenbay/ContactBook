@@ -13,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ContactBook.Views.Components
+namespace ContactBook.Views
 {
     /// <summary>
-    /// Interaction logic for SelectedContactItem.xaml
+    /// Interaction logic for EditAddContactView.xaml
     /// </summary>
-    public partial class SelectedContactItem : UserControl
+    public partial class EditAddContactView : UserControl
     {
-        public SelectedContactItem()
+        public EditAddContactView()
         {
             InitializeComponent();
-            image.ImageSource = new BitmapImage(new Uri("https://as1.ftcdn.net/v2/jpg/03/02/88/46/1000_F_302884605_actpipOdPOQHDTnFtp4zg4RtlWzhOASp.jpg"));
         }
     }
 }

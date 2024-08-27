@@ -7,10 +7,9 @@ using ContactBook.Models.Base;
 
 namespace ContactBook.Models
 {
-    public class Email : BaseEntity
+    public class Email : BaseEntityForeign
     {
         public string Label { get; set; }
         public string Address { get; set; }
-        public int ContactId { get; set; }
     }
 }

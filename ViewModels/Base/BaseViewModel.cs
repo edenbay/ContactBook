@@ -10,7 +10,7 @@ namespace ContactBook.ViewModels.Base
     [AddINotifyPropertyChangedInterface]
     public class BaseViewModel
     {
-        
+        public virtual void Dispose() { }
 
     }
 }

@@ -21,7 +21,16 @@ namespace ContactBook.Views.Components
     public partial class ListContactItem : UserControl
     {
 
-        internal Visibility _initialsVisibility;
+
+        public Visibility InitialsVisibility
+        {
+            get { return (Visibility)GetValue(InitialsVisibilityProperty); }
+            set { SetValue(InitialsVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for InitialsVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty InitialsVisibilityProperty =
+            DependencyProperty.Register("InitialsVisibility", typeof(Visibility), typeof(ListContactItem), new PropertyMetadata(Visibility.Visible));
 
         public ImageSource Image
         {
@@ -32,8 +41,6 @@ namespace ContactBook.Views.Components
         // Using a DependencyProperty as the backing store for Image.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register("Image", typeof(ImageSource), typeof(ListContactItem), new PropertyMetadata(null));
-
-
 
         public string Initials
         {
@@ -57,8 +64,6 @@ namespace ContactBook.Views.Components
         // Using a DependencyProperty as the backing store for FullName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FullNameProperty =
             DependencyProperty.Register("FullName", typeof(string), typeof(ListContactItem), new PropertyMetadata("Name Nameson"));
-
-
 
         public string Relationship
         {

@@ -8,10 +8,106 @@
              d:DesignHeight="450" d:DesignWidth="450"
              xmlns:vm="clr-namespace:ContactBook.ViewModels"
              xmlns:components="clr-namespace:ContactBook.Views.Components"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              d:DataContext="{d:DesignInstance vm:SelectedContactViewModel}"
+             x:Name="view"
              Padding="0,1,0,0"
              Background="Transparent">
     <Grid Background="{DynamicResource Outline Variation}">
-        <components:SelectedContactItem/>
+        <Border BorderThickness="1" CornerRadius="6" BorderBrush="{DynamicResource Outline Variation}" Background="{DynamicResource Surface Container Highest}">
+        <Grid>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="110" Height="110" StrokeThickness="4" 
+                             Stroke="{DynamicResource Surface Container Lowest}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             Margin="25,25,0,0">
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="image" 
+                                        RenderOptions.BitmapScalingMode="HighQuality" 
+                                        Stretch="UniformToFill"
+                                        RenderOptions.EdgeMode="Aliased"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <StackPanel Orientation="Vertical" Height="90" Margin="10,5" VerticalAlignment="Bottom">
+                            <Label Content="{Binding SelectedContact.FullName}" 
+                               HorizontalAlignment="Left"
+                               Foreground="{DynamicResource On Surface}"
+                               FontFamily="{DynamicResource Roboto}"
+                               FontSize="24"
+                               FontWeight="DemiBold" 
+                               Height="38" 
+                               Width="260"/>
+
+                            <Label Content="{Binding SelectedContact.Relationship}" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource On Surface}"
+                               FontFamily="{DynamicResource Roboto}"
+                               FontSize="20"
+                               FontWeight="Regular"
+                               Height="38"
+                               Width="260"/>
+                    </StackPanel>
+                    <components:IconButton 
+                                x:Name="addContact"
+                                IconKind="EditAltLine"
+                                Margin="0,0,0,10"
+                                Height="45" 
+                                Width="45" 
+                                IconPadding="0"  
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                ToolTip="Add new contact">
+
+                    </components:IconButton>
+                </StackPanel>
+                <Rectangle Fill="{DynamicResource Surface Dim}" Height="1" Margin="0,25,0,5"/>
+                <Label Content="Contact information" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top"
+                           Foreground="{DynamicResource On Surface}"
+                           FontFamily="{DynamicResource Roboto}"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Margin="25,5"/>
+                    <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
+                
+                    <StackPanel Orientation="Horizontal" Margin="45,0">
+                        <ListView ItemsSource="{Binding SelectedContact.Addresses}" Background="Transparent" >
+                           
+                        </ListView>
+                 </StackPanel>
+                
+                <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="45,0" Height="Auto" Width="Auto">
+                        <ListView ItemsSource="{Binding SelectedContact.Emails}" Background="Transparent">
+                          
+                        </ListView>
+                 </StackPanel>
+
+                <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
+                    <StackPanel Orientation="Horizontal" Margin="45,0" Height="Auto" Width="Auto">
+                        <ListView ItemsSource="{Binding SelectedContact.Numbers}" Background="Transparent">
+
+                        </ListView>
+                    </StackPanel>
+
+                </StackPanel>
+        </Grid>
+        </Border>
+        <!--<ItemsControl Width="Auto" Height="Auto"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      ItemsSource="{Binding SelectedContact}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid></Grid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>-->
+        <!--<ContentPresenter Content="{Binding SelectedContact}" Width="Auto" Height="Auto"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>-->
     </Grid>
 </UserControl>

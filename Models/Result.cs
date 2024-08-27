@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContactBook.Models
 {
-    internal class Result<T>
+    public class Result<T>
     {
         public T Value { get; set; }
         public bool Success { get; set; }

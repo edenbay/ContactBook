@@ -13,28 +13,36 @@ using System.Windows.Media.Imaging;
 
 namespace ContactBook.Models
 {
-    class ListContact : ListContactItem
+    public class ListContact : ListContactItem
     {
+        public int Id { get; private set; }
 
         public ListContact(Contact contact, Relation relation)
         {
            FullName = contact.FirstName + " " + contact.LastName;
-           Relationship = relation.Connection;
+           
+           Id = contact.Id;
 
-           if (contact.ImageUrl != null)
-            {
-                Image = new BitmapImage(new Uri(contact.ImageUrl));
-                _initialsVisibility = System.Windows.Visibility.Hidden;
-            }
+           if (relation != null)
+           {
+                Relationship = relation.Connection;
+           }
+
+           if (contact.Image != null)
+           {
+                Image = new BitmapImage(new Uri(contact.Image));
+                InitialsVisibility = System.Windows.Visibility.Hidden;
+           }
            else
-            {
-                _initialsVisibility = System.Windows.Visibility.Visible;
-            }
+           {
+                InitialsVisibility = System.Windows.Visibility.Visible;
+           }
+
            if (FullName.Length > 1)
-            {
+           {
                 var rawInitials = $"{contact.FirstName.First()}{contact.LastName.First()}";
                 Initials = rawInitials.ToUpper();
-            }
+           }
            
 
         }

@@ -6,43 +6,49 @@
              xmlns:local="clr-namespace:ContactBook.Views.Components"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type local:ListContactItem}}"
-             
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              BorderThickness="0"
              BorderBrush="{x:Null}"
              Cursor="Hand"
              ToolTip="{Binding FullName}">
     
     <Border CornerRadius="10" Background="Transparent" BorderBrush="Transparent" BorderThickness="1">
-        <Grid>
-            <Border Visibility="{Binding _initialsVisibility}" 
-                        Width="35" Height="35" 
-                        Margin="6,4,190,4" 
-                        CornerRadius="50" 
-                        Background="{StaticResource On Surface Variation}"
-                        BorderBrush="{x:Null}" 
-                        BorderThickness="0">
-                <Label Content="{Binding Initials}" 
-                        BorderBrush="{x:Null}"
-                        FontSize="18" BorderThickness="0"  
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="{StaticResource Inverse On Surface}" 
-                        FontFamily="Segoe UI Semibold"
-                        />
-            </Border>
+        <b:Interaction.Triggers>
+            <b:EventTrigger EventName="PreviewMouseDoubleClick">
+                <b:CallMethodAction TargetObject="{Binding}" MethodName="ItemDoubleClick"/>
+            </b:EventTrigger>
+        </b:Interaction.Triggers>
+        <Border Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <Grid HorizontalAlignment="Left">
+                    <Border Visibility="{Binding InitialsVisibility}" 
+                                Width="35" Height="35" 
+                                CornerRadius="50" 
+                                Background="{StaticResource On Surface Variation}"
+                                BorderBrush="{x:Null}" 
+                                BorderThickness="0">
+                        <Label Content="{Binding Initials}" 
+                                BorderBrush="{x:Null}"
+                                FontSize="13" BorderThickness="0"  
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource Inverse On Surface}" 
+                                FontFamily="Segoe UI Semibold"/>
+                    </Border>
 
-            <Ellipse Width="35" Height="35" Margin="6,2,190,6" >
-                <Ellipse.Fill>
-                    <ImageBrush ImageSource="{Binding Image}"/>
-                </Ellipse.Fill>
-            </Ellipse>
-
-            <Label x:Name="lblFullName" 
+                    <Ellipse Width="35" Height="35">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding Image}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Grid>
+                <Grid Width="10"/>
+                <StackPanel Width="170">
+                    <Label x:Name="lblFullName" 
                     BorderThickness="0" 
                     BorderBrush="{x:Null}"
                     Content="{Binding FullName}"
-                    HorizontalAlignment="Left" 
-                    Margin="52,0,0,0" 
+                    HorizontalAlignment="Stretch" 
                     VerticalAlignment="Top" 
                     Width="170"
                     FontFamily="{StaticResource Roboto}"
@@ -50,55 +56,19 @@
                     FontSize="14" 
                     Foreground="{StaticResource On Surface}"/>
 
-            <Label x:Name="lblRelationship" 
-                    BorderThickness="0"
-                    BorderBrush="{x:Null}"
-                    Content="{Binding Relationship}" 
-                    HorizontalAlignment="Left" 
-                    Margin="52,20,0,0" 
-                    VerticalAlignment="Top" 
-                    Width="170" 
-                    Foreground="#FFAEB1B5" 
-                    FontFamily="{StaticResource Roboto}"
-                    FontWeight="Light"
-                    FontSize="12"/>
-        </Grid>
-        <!--<Border.Triggers>
-            <EventTrigger RoutedEvent="PreviewMouseDown">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation From="#242424" To="#242424" Duration="0"
-                            Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-            
-            <EventTrigger RoutedEvent="MouseEnter">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation From="Transparent" To="#242424" Duration="0"
-                             Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"/>
-                        <ColorAnimation From="Transparent" To="#2D2D2D" Duration="0"
-                             Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-
-            <EventTrigger RoutedEvent="MouseLeave">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation From="#242424" To="Transparent" Duration="0"
-                            Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"/>
-                        <ColorAnimation From="#2D2D2D" To="Transparent" Duration="0"
-                            Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-
-            
-        </Border.Triggers>-->
-
-        
-
+                    <Label x:Name="lblRelationship" 
+                        BorderThickness="0"
+                        BorderBrush="{x:Null}"
+                        Content="{Binding Relationship}" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Top" 
+                        Width="170" 
+                        Foreground="#FFAEB1B5" 
+                        FontFamily="{StaticResource Roboto}"
+                        FontWeight="Light"
+                        FontSize="12"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
     </Border>
 </UserControl>
