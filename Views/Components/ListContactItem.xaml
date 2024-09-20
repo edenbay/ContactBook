@@ -13,11 +13,7 @@
              ToolTip="{Binding FullName}">
     
     <Border CornerRadius="10" Background="Transparent" BorderBrush="Transparent" BorderThickness="1">
-        <b:Interaction.Triggers>
-            <b:EventTrigger EventName="PreviewMouseDoubleClick">
-                <b:CallMethodAction TargetObject="{Binding}" MethodName="ItemDoubleClick"/>
-            </b:EventTrigger>
-        </b:Interaction.Triggers>
+        
         <Border Padding="5">
             <StackPanel Orientation="Horizontal">
                 <Grid HorizontalAlignment="Left">

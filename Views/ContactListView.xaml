@@ -16,10 +16,16 @@
         
         <ListView ItemsSource="{Binding Contacts}" Background="{x:Null}"
                   BorderBrush="{x:Null}"
+                  x:Name="contactsList"
                   VerticalContentAlignment="Center">
+           
             <b:Interaction.Triggers>
+                
                 <b:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                    <b:CallMethodAction TargetObject="{Binding}" MethodName="ItemClick"/>
+                    <!--<b:CallMethodAction TargetObject="{Binding}" MethodName="ItemClick"/>-->
+                    <b:InvokeCommandAction 
+                        Command="{Binding SelectContactCommand}"
+                        CommandParameter="{Binding SelectedItem, ElementName=contactsList}"/>
                 </b:EventTrigger>
             </b:Interaction.Triggers>
             <ListView.Resources>

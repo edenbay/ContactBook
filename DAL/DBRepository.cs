@@ -126,6 +126,50 @@ namespace ContactBook.DAL
 
             return fullContacts;
         }
+
+        /// <summary>
+        /// Asynchronously retrieves a list of contacts.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<SelectedContact>> GetContactsAsync(string search = default)
+        {
+            string likeAppendage = string.Empty;
+            string likeAppendageForeign = string.Empty;
+
+            if (search != default)
+            {
+                likeAppendage = $"LIKE %{search}";
+                //logik som lägger till
+                //%search osv osv.
+            }
+
+            var fullContacts = new List<SelectedContact>();
+
+            var contacts = await _sqlite.SelectDataAsync<Contact>("SELECT * FROM contact");
+
+            var numbers = await _sqlite.SelectDataAsync<Number>("SELECT * FROM number");
+
+            var emails = await _sqlite.SelectDataAsync<Email>("SELECT * FROM email");
+
+            var addresses = await _sqlite.SelectDataAsync<Address>("SELECT * FROM address");
+
+            var relation = await _sqlite.SelectDataAsync<Relation>("SELECT * FROM relation");
+
+            foreach (var contact in contacts)
+            {
+                var fullContact = new SelectedContact(
+                    contact,
+                    RetrieveFirstWhereId(relation, contact.Id),
+                    RetrieveWhereId(emails, contact.Id),
+                    RetrieveWhereId(addresses, contact.Id),
+                    RetrieveWhereId(numbers, contact.Id)
+                    );
+                fullContacts.Add(fullContact);
+            }
+
+            return fullContacts;
+        }
+
         /// <summary>
         /// Asynchronously retrieves a contact whose id equals the specified one.
         /// </summary>
@@ -155,60 +199,5 @@ namespace ContactBook.DAL
 
             return fullContact;
         }
-
-
-
-
-
-
-
-
-        //private (string, string) ToCommandValues(Dictionary<string, object> properties)
-        //{
-        //    foreach (var property in properties)
-        //    {
-
-        //    }
-
-        //    return (string.Empty, string.Empty);
-        //}
-
-
-
-
-
-        //public async Task<IEnumerable<FullContactViewModel>> SelectAllContactViewModels<T>() where T : FullContactViewModel
-        //{
-        //    var command = new NpgsqlCommand($@"SELECT * FROM {typeof(T).Name} WHERE id=@id");
-        //    command.Parameters.AddWithValue("id", id);
-        //    command.
-        //    var result = await InteractWithDBAsync<IEnumerable<T>>(() => ReadEntitiesAsync<T>(command));
-
-        //    return result;
-        //}
-
-
-
-        //public async Task<bool> InsertEntityAsync<T>(T entity) where T : BaseEntity
-        //{   
-        //    bool result = await InteractWithDBAsync<bool>(() => InsertEntity<T>(entity));
-
-        //    return result;
-        //}
-
-        //public async Task<T> SelectEntityAsync<T>(int id)
-        //{
-
-        //    var command = new NpgsqlCommand($@"SELECT * FROM {typeof(T).Name} WHERE id=@id");
-        //    command.Parameters.AddWithValue("id", id);
-
-        //    var result = await InteractWithDBAsync<IEnumerable<T>>(() => ReadEntitiesAsync<T>(command));
-
-        //    return result.First();
-        //}
-
-
-
-
     }
 }

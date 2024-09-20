@@ -33,7 +33,7 @@
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Left"
                 Focusable="True"
-                AcceptsReturn="True"
+                AcceptsReturn="False"
                 AcceptsTab="True"
                 TextChanged="TextChanged"
                 PreviewKeyDown="InitiateSearch"

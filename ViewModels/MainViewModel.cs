@@ -1,23 +1,28 @@
-﻿using ContactBook.DAL;
+﻿using ContactBook.Commands;
+using ContactBook.DAL;
 using ContactBook.Models;
 using ContactBook.ViewModels.Base;
+using ContactBook.Views.Components;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ContactBook.ViewModels
 {
-    internal class MainViewModel : BaseViewModel
+    public sealed class MainViewModel : BaseViewModel
     {
-        public BaseViewModel CurrentViewModel { get; set; } = new SelectedContactViewModel();
-
+        public static MainViewModel Instance { get => _instance ?? (_instance = new MainViewModel()); }
+        private static MainViewModel _instance;
+        public SelectedContactViewModel SelectedContactViewModel { get; set; }
         public ContactListViewModel ContactListViewModel { get; init; } = new ContactListViewModel();
-
         public EditAddContactViewModel EditAddContactViewModel { get; private set; }
 
-        public MainViewModel()
-        {
-            
-        }
+        private MainViewModel() {}
 
+
+        public void SearchForContact(string search)
+        {
+            //ContactListViewModel.
+        }
 
         public void BeginAddNewContact(object sender, RoutedEventArgs e)
         {
@@ -30,6 +35,16 @@ namespace ContactBook.ViewModels
                 );
 
             ContactListViewModel.AddNewContact(testContact);
+        }
+
+        public void SelectNewContact(SelectedContact contact)
+        {
+            if (SelectedContactViewModel == null)
+            {
+                SelectedContactViewModel = new();
+            }
+
+            SelectedContactViewModel.SelectContact(contact);
         }
     }
 }

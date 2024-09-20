@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ContactBook.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="450"
+             d:DesignHeight="450" d:DesignWidth="500"
              xmlns:vm="clr-namespace:ContactBook.ViewModels"
              xmlns:components="clr-namespace:ContactBook.Views.Components"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -14,23 +14,24 @@
              Padding="0,1,0,0"
              Background="Transparent">
     <Grid Background="{DynamicResource Outline Variation}">
+
         <Border BorderThickness="1" CornerRadius="6" BorderBrush="{DynamicResource Outline Variation}" Background="{DynamicResource Surface Container Highest}">
-        <Grid>
-            <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <Ellipse Width="110" Height="110" StrokeThickness="4" 
+            <Grid>
+                <StackPanel Orientation="Vertical">
+                    <WrapPanel Orientation="Horizontal">
+                        <Ellipse Width="110" Height="110" StrokeThickness="4" 
                              Stroke="{DynamicResource Surface Container Lowest}"
                              HorizontalAlignment="Left"
                              VerticalAlignment="Top"
                              Margin="25,25,0,0">
-                        <Ellipse.Fill>
-                            <ImageBrush x:Name="image" 
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="image" 
                                         RenderOptions.BitmapScalingMode="HighQuality" 
                                         Stretch="UniformToFill"
                                         RenderOptions.EdgeMode="Aliased"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <StackPanel Orientation="Vertical" Height="90" Margin="10,5" VerticalAlignment="Bottom">
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <StackPanel Orientation="Vertical" Height="90" Margin="10,5" VerticalAlignment="Bottom">
                             <Label Content="{Binding SelectedContact.FullName}" 
                                HorizontalAlignment="Left"
                                Foreground="{DynamicResource On Surface}"
@@ -49,8 +50,8 @@
                                FontWeight="Regular"
                                Height="38"
                                Width="260"/>
-                    </StackPanel>
-                    <components:IconButton 
+                        </StackPanel>
+                        <components:IconButton 
                                 x:Name="addContact"
                                 IconKind="EditAltLine"
                                 Margin="0,0,0,10"
@@ -61,10 +62,10 @@
                                 VerticalAlignment="Center"
                                 ToolTip="Add new contact">
 
-                    </components:IconButton>
-                </StackPanel>
-                <Rectangle Fill="{DynamicResource Surface Dim}" Height="1" Margin="0,25,0,5"/>
-                <Label Content="Contact information" 
+                        </components:IconButton>
+                    </WrapPanel>
+                    <Rectangle Fill="{DynamicResource Surface Dim}" Height="1" Margin="0,25,0,5"/>
+                    <Label Content="Contact information" 
                            HorizontalAlignment="Left" 
                            VerticalAlignment="Top"
                            Foreground="{DynamicResource On Surface}"
@@ -72,27 +73,27 @@
                            FontSize="16"
                            FontWeight="SemiBold"
                            Margin="25,5"/>
-                
+
                     <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
 
                     <StackPanel Orientation="Horizontal" Margin="45,0">
                         <ListView ItemsSource="{Binding SelectedContact.Addresses}" Background="Transparent" 
                                   BorderBrush="{x:Null}" >
-                           
+
                         </ListView>
-                 </StackPanel>
+                    </StackPanel>
 
                     <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
-                
+
                     <StackPanel Orientation="Horizontal" Margin="45,0" Height="Auto" Width="Auto">
                         <ListView ItemsSource="{Binding SelectedContact.Emails}" Background="Transparent" 
                                   BorderBrush="{x:Null}">
-                          
+
                         </ListView>
-                 </StackPanel>
+                    </StackPanel>
 
                     <Rectangle Fill="{DynamicResource Outline Variation}" Height="1" Margin="25,25,25,5"/>
-                
+
                     <StackPanel Orientation="Horizontal" Margin="45,0" Height="Auto" Width="Auto">
                         <ListView ItemsSource="{Binding SelectedContact.Numbers}" Background="Transparent" 
                                   BorderBrush="{x:Null}">
@@ -101,18 +102,7 @@
                     </StackPanel>
 
                 </StackPanel>
-        </Grid>
+            </Grid>
         </Border>
-        <!--<ItemsControl Width="Auto" Height="Auto"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                      ItemsSource="{Binding SelectedContact}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid></Grid>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>-->
-        <!--<ContentPresenter Content="{Binding SelectedContact}" Width="Auto" Height="Auto"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>-->
     </Grid>
 </UserControl>

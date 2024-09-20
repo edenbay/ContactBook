@@ -48,9 +48,6 @@ namespace ContactBook.Views
             }
         }
 
-        private void ItemDoubleClick(object sender, MouseButtonEventArgs e)
-        {
 
-        }
     }
 }

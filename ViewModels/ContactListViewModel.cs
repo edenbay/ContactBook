@@ -1,25 +1,28 @@
 ﻿using ContactBook.Commands;
 using ContactBook.DAL;
 using ContactBook.Models;
-using ContactBook.Stores;
 using ContactBook.ViewModels.Base;
 using ContactBook.Views.Components;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ContactBook.ViewModels
 {
     public class ContactListViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Database repository.
+        /// </summary>
         private DBRepository _repo;
 
+        /// <summary>
+        /// Contains all contacts.
+        /// </summary>
         public ObservableCollection<ListContactItem> Contacts { get; set; } = new();
+        /// <summary>
+        /// Selects a contact.
+        /// </summary>
+        public ICommand SelectContactCommand { get; private set; }
 
         /// <summary>
         /// If Contacts.Count and ContactsCount differ, call on refreshContactsList.
@@ -27,15 +30,12 @@ namespace ContactBook.ViewModels
         /// </summary>
         public int ContactCount { get; set; }
 
-        /// <summary>
-        /// Allows for communication between MainViewModel and this to select a contact.
-        /// </summary>
-        public ICommand SelectNewContactCommand { get; }
-
         public ContactListViewModel()
         {
-            SelectNewContactCommand = new SelectNewContactCommand(null, this);
+            //SelectNewContactCommand = new SelectNewContactCommand(null, this);
+            SelectContactCommand = new RelayCommand(execute: contact => SelectContact(contact));
             _repo = new();
+
             FillContactsListOnInit();
 
         }
@@ -54,8 +54,6 @@ namespace ContactBook.ViewModels
                 Contacts.Add(new ListContact(fullContact));
                 ContactCount = await _repo.GetContactsCount();
             }
-
-            
         }
 
         /// <summary>
@@ -74,35 +72,23 @@ namespace ContactBook.ViewModels
             }
         }
 
-
-
-        
-
         /// <summary>
-        /// Converts a ListContactItem to a SelectedContactItem and tells all subscribers
+        /// Converts a ListContactItem to a SelectedContact and selects it.
         /// </summary>
         /// <param name="listContactItem"></param>
-        private async void SelectContact(ListContactItem listContactItem)
+        private async void SelectContact(object listContactItem)
         {
             if (listContactItem is ListContact)
             {
                 var listContact = (ListContact)listContactItem;
                 var selected = await _repo.GetContactAsync(listContact.Id);
-                SelectNewContactCommand.Execute(selected);
+                MainViewModel.Instance.SelectNewContact(selected);
             }
-
-            
         }
 
-        public void ItemClick(object sender, MouseButtonEventArgs e)
+        public async void SearchForContact()
         {
-            //PreviewMouseLeftButtonUp = "ItemClick"
-            var list = sender as ListView;
-            if (list.SelectedItem != null)
-            {
-                var item = list.SelectedItem as ListContactItem;
-                SelectContact(item);
-            }
+
         }
 
     }

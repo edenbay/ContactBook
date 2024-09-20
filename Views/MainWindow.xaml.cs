@@ -6,6 +6,7 @@ using ContactBook.Views.Components;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -29,7 +30,7 @@ namespace ContactBook
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = MainViewModel.Instance;
             
         }
 
@@ -87,11 +88,25 @@ namespace ContactBook
 #warning No logic has been provided.
         private void InitiateSearch(object sender, KeyEventArgs e)
         {
-            var h = sender;
+
+            if (sender is not SearchBar searchBar)
+            {
+                throw new Exception();
+            }
+
+            string searchText = searchBar.searchBox.Text;
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                return;
+            }
+
+            searchText = searchText.Replace("\r\n", "");
+
             if (e.Key == Key.Enter)
             {
-                //Code for searching. Call MainViewModel
-                e.Handled = true;
+                MainViewModel.Instance.SearchForContact(searchText);
+
             }
         }
     }
